@@ -1,7 +1,5 @@
 <template>
-  <button>
-    <slot></slot>
-  </button>
+  <input type="submit" placeholder="Submit Log" v-on:submit="$emit('submit-log', $event)">
 </template>
 
 <script>

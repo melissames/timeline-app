@@ -1,7 +1,9 @@
 <template>
   <div id="add-new-log">
     <h1>Add New Log</h1>
-    <form>
+    <form 
+      class="form-container"
+      @submit.prevent="createLogCard">
       <input 
         type="text" 
         placeholder="Log title" 
@@ -10,27 +12,43 @@
         type="text" 
         placeholder="Log Message"
         v-model="logMessage">
-      <ButtonComponent>Submit Log</ButtonComponent>
+      <input
+        type="submit"
+        value="Submit Log">
     </form>
+    <div v-if="cards.length">
+      <div v-for="(card, index) in cards" :key="index">
+        <LogCard :card="card" />
+      </div>
+    </div>
   </div>
 
 </template>
 
 <script>
-import ButtonComponent from './ButtonComponent.vue'
+import LogCard from './LogCard.vue'
 
 
 export default {
   name: 'AddNewLog',
-  data: function (){
+  components: {
+    LogCard
+  },
+  data () {
     return {
       logTitle: '',
-      logMessage: ''
+      logMessage: '',
+      cards: []
     }
   },
-  components: {
-    ButtonComponent
-  }
+  methods: {
+    createLogCard(){
+      this.cards.push({
+        title: this.logTitle, 
+        message: this.logMessage
+      })
+    }
+  } 
 }
 </script>
 
@@ -49,5 +67,10 @@ li {
 }
 a {
   color: #42b983;
+}
+.form-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
